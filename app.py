@@ -159,8 +159,11 @@ def home():
 @app.route("/items/new/<item_type>", methods=["GET", "POST"])
 @login_required
 def new_item(item_type):
-    ensure_db()
-    if item_type not in ("ของหาย", "ของที่พบ"):
+    if item_type == "lost":
+        item_type_th = "ของหาย"
+    elif item_type == "found":
+        item_type_th = "ของที่พบ"
+    else:
         return redirect(url_for("home"))
 
     if request.method == "POST":
@@ -173,33 +176,40 @@ def new_item(item_type):
 
         if not title:
             flash("กรุณาระบุชื่อสิ่งของ", "warning")
-            return render_template("item_form.html", item_type=item_type)
+            return render_template(
+                "item_form.html",
+                item_type=item_type_th
+            )
 
         con = connect()
-        try:
-            with con.cursor() as cur:
-                cur.execute(
-                    """
-                    INSERT INTO items
-                    (user_id, item_type, title, category, description, location,
-                     date_found_lost, contact, created_at)
-                    VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)
-                    """,
-                    (
-                        session["user_id"], item_type, title, category, description,
-                        location, date_found_lost, contact,
-                        datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                    ),
-                )
-            con.commit()
-        finally:
-            con.close()
 
-        flash(f"บันทึกประกาศ{item_type}แล้ว", "success")
+        con.execute("""
+            INSERT INTO items
+            (user_id, item_type, title, category, description,
+             location, date_found_lost, contact, created_at)
+            VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)
+        """, (
+            session["user_id"],
+            item_type_th,
+            title,
+            category,
+            description,
+            location,
+            date_found_lost,
+            contact,
+            datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        ))
+
+        con.commit()
+        con.close()
+
+        flash(f"บันทึกประกาศ{item_type_th}แล้ว", "success")
         return redirect(url_for("items"))
 
-    return render_template("item_form.html", item_type=item_type)
-
+    return render_template(
+        "item_form.html",
+        item_type=item_type_th
+    )
 
 @app.route("/items")
 @login_required
