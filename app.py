@@ -155,10 +155,6 @@ def home():
         con.close()
     return render_template("home.html", lost=lost, found=found)
 
-
-@app.route("/items/new/<item_type>", methods=["GET", "POST"])
-@login_required
-def new_item(item_type):
     @app.route("/items/new/<item_type>", methods=["GET", "POST"])
 @login_required
 def new_item(item_type):
