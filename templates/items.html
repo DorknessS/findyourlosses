@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}ค้นหารายการ{% endblock %}
+{% block content %}
+<div class="page-head">
+    <div><p class="eyebrow">BROWSE</p><h1>รายการของหาย / ของที่พบ</h1></div>
+</div>
+
+<form class="searchbar">
+    <input name="q" value="{{ keyword }}" placeholder="ค้นหาชื่อสิ่งของ หมวดหมู่ หรือสถานที่...">
+    <button class="btn primary">ค้นหา</button>
+    <a class="btn secondary" href="{{ url_for('items') }}">ทั้งหมด</a>
+</form>
+
+<div class="table-wrap">
+<table>
+<thead><tr>
+<th>ID</th><th>ประเภท</th><th>สิ่งของ</th><th>หมวดหมู่</th><th>สถานที่</th><th>วันที่</th><th>สถานะ</th>
+</tr></thead>
+<tbody>
+{% for item in items %}
+<tr onclick="location.href='{{ url_for('item_detail', item_id=item['id']) }}'">
+<td>{{ item['id'] }}</td>
+<td><span class="badge {{ 'lost' if item['item_type']=='ของหาย' else 'found' }}">{{ item['item_type'] }}</span></td>
+<td><strong>{{ item['title'] }}</strong></td>
+<td>{{ item['category'] or '-' }}</td>
+<td>{{ item['location'] or '-' }}</td>
+<td>{{ item['date_found_lost'] or '-' }}</td>
+<td>{{ item['status'] }}</td>
+</tr>
+{% else %}
+<tr><td colspan="7" class="empty">ยังไม่มีรายการ</td></tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+{% endblock %}

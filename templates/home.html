@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}หน้าหลัก{% endblock %}
+{% block content %}
+<section class="hero">
+    <div>
+        <p class="eyebrow">COMMUNITY LOST & FOUND</p>
+        <h1>ตามหาของที่หาย<br>ช่วยส่งคืนของที่พบ</h1>
+        <p>ประกาศ ค้นหา และติดต่อเจ้าของสิ่งของผ่านเว็บไซต์เดียว</p>
+        <div class="actions">
+            <a class="btn primary" href="{{ url_for('new_item', item_type='ของหาย') }}">＋ แจ้งของหาย</a>
+            <a class="btn secondary" href="{{ url_for('new_item', item_type='ของที่พบ') }}">＋ แจ้งของที่พบ</a>
+        </div>
+    </div>
+    <div class="hero-icon">🔎</div>
+</section>
+
+<div class="stats">
+    <div class="stat-card"><span>ของหาย</span><strong>{{ lost }}</strong></div>
+    <div class="stat-card"><span>ของที่พบ</span><strong>{{ found }}</strong></div>
+</div>
+{% endblock %}

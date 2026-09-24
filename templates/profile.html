@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}ข้อมูลผู้ใช้{% endblock %}
+{% block content %}
+<div class="profile-card">
+    <div class="avatar">👤</div>
+    <h1>ข้อมูลผู้ใช้</h1>
+    <div class="profile-row"><b>ชื่อผู้ใช้</b><span>{{ user['username'] }}</span></div>
+    <div class="profile-row"><b>ชื่อ-นามสกุล</b><span>{{ user['fullname'] }}</span></div>
+    <div class="profile-row"><b>เบอร์โทรศัพท์</b><span>{{ user['phone'] or '-' }}</span></div>
+</div>
+{% endblock %}

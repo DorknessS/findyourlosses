@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}แจ้ง{{ item_type }}{% endblock %}
+{% block content %}
+<div class="form-card">
+    <p class="eyebrow">NEW REPORT</p>
+    <h1>แจ้ง{{ item_type }}</h1>
+    <form method="post">
+        <div class="grid2">
+            <div><label>ชื่อสิ่งของ *</label><input name="title" required></div>
+            <div><label>ประเภท / หมวดหมู่</label><input name="category"></div>
+            <div><label>สถานที่</label><input name="location"></div>
+            <div><label>วันที่หาย / พบ</label><input name="date_found_lost" placeholder="เช่น 13/08/2026"></div>
+        </div>
+        <label>รายละเอียด</label>
+        <textarea name="description" rows="5"></textarea>
+        <label>ช่องทางติดต่อ</label>
+        <input name="contact">
+        <button class="btn primary">บันทึกประกาศ</button>
+    </form>
+</div>
+{% endblock %}
