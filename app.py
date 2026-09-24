@@ -159,6 +159,9 @@ def home():
 @app.route("/items/new/<item_type>", methods=["GET", "POST"])
 @login_required
 def new_item(item_type):
+    @app.route("/items/new/<item_type>", methods=["GET", "POST"])
+@login_required
+def new_item(item_type):
     if item_type == "lost":
         item_type_th = "ของหาย"
     elif item_type == "found":
